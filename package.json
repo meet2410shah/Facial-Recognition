@@ -1,0 +1,29 @@
+{
+  "name": "facial-recognition",
+  "version": "1.0.0",
+  "description": "A Node Js - Express Web App with Python",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meet2410shah/Facial-Recognition.git"
+  },
+  "keywords": [
+    "Facial",
+    "Recognition",
+    "AI"
+  ],
+  "author": "Meet Shah, Rahil Shah",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/meet2410shah/Facial-Recognition/issues"
+  },
+  "homepage": "https://github.com/meet2410shah/Facial-Recognition#readme",
+  "dependencies": {
+    "ejs": "^2.6.2",
+    "express": "^4.17.1",
+    "nodemon": "^1.19.1"
+  }
+}
