@@ -1,28 +1,49 @@
 <% include partials/header %>
 <div class="container">
   <div class="upload">
-      <form action="/upload" method="POST">
-        <h3 style="margin-bottom: 5px;"><label for="username">Username:</label></h3>
-        <input class="username" type="text" name="username" placeholder="Enter your username" id="username" required />
-        <input name="imageUrl" type="text" style="display: none" id="data" />
-        <input name="index" type="text" style="display: none" value="0" id="index" />
-        <% if (!user) { %>
-          <button class="submit">Upload Images</button>
-        <% } else { %>
-          <button class="submit" disabled="<%= user.index == 0 ? true : false %>">Upload Images (<%= 10 - user.index %>)</button>
-        <% }%>
-      </form>
+    <form action="/upload" method="POST">
+      <h3 style="margin-bottom: 5px;">
+        <label for="username">Username:</label>
+      </h3>
+      <input
+        class="username"
+        type="text"
+        name="username"
+        placeholder="Enter your username"
+        id="username"
+        required
+      />
+      <input name="imageUrl" type="text" style="display: none" id="data" />
+      <input
+        name="index"
+        type="text"
+        style="display: none"
+        value="0"
+        id="index"
+      />
+      <% if (!user) { %>
+      <button class="submit">Upload Images</button>
+      <% } else { %>
+      <button class="submit" disabled="<%= user.index == 0 ? true : false %>">
+        Upload Images (<%= 10 - user.index %>)
+      </button>
+      <% }%>
+    </form>
   </div>
   <div style="padding: 0 300px">
-      <div class="video">
-          <video id="vid"></video>
-      </div>
-      <div class="check"><button>Check</button></div>
+    <div class="video">
+      <video id="vid"></video>
+    </div>
+    <div class="check">
+      <form action="/check" method="POST">
+        <button>Check</button>
+      </form>
+    </div>
   </div>
 </div>
 <script>
   let q = "<%= user ? user.username : '' %>";
-  document.querySelector('#username').value = q;
+  document.querySelector("#username").value = q;
   const vid = document.querySelector("video");
   navigator.mediaDevices
     .getUserMedia({ video: true }) // request cam
@@ -35,7 +56,7 @@
       const btn = document.querySelector("button");
       btn.disabled = false;
       btn.onclick = e => {
-          takeASnap();
+        takeASnap();
       };
     })
     .catch(e => console.log("please use the fiddle instead"));
@@ -46,7 +67,8 @@
     canvas.width = vid.videoWidth; // set its size to the one of the video
     canvas.height = vid.videoHeight;
     ctx.drawImage(vid, 0, 0); // the video
-    document.querySelector("#index").value = parseInt(document.querySelector("#index").value) + 1;
+    document.querySelector("#index").value =
+      parseInt(document.querySelector("#index").value) + 1;
     document.querySelector("#data").value = canvas.toDataURL();
   }
 </script>

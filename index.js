@@ -20,7 +20,7 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
-  res.render("index",  {user: null});
+  res.render("index", { user: null });
 });
 
 app.post("/upload", (req, res) => {
@@ -31,7 +31,10 @@ app.post("/upload", (req, res) => {
 
   try {
     fs.mkdirSync(__dirname + "/image/" + username);
-    fs.writeFileSync(__dirname + "/image/" + username + "/" + username +".txt", 0);
+    fs.writeFileSync(
+      __dirname + "/image/" + username + "/" + username + ".txt",
+      0
+    );
   } catch (err) {
     if (err.code == "EEXIST") {
       console.log("directory already existed");
@@ -39,13 +42,19 @@ app.post("/upload", (req, res) => {
       console.log(err);
     }
   }
-  data = fs.readFileSync(__dirname + "/image/" + username + "/" + username +".txt", 'utf-8')
+  data = fs.readFileSync(
+    __dirname + "/image/" + username + "/" + username + ".txt",
+    "utf-8"
+  );
   var savePath = path.resolve(
     __dirname + "/image/" + username + "/pic" + parseInt(data) + ".jpg"
   );
-  fs.writeFileSync(__dirname + "/image/" + username + "/" + username +".txt", parseInt(data) + 1);
+  fs.writeFileSync(
+    __dirname + "/image/" + username + "/" + username + ".txt",
+    parseInt(data) + 1
+  );
   fs.writeFileSync(savePath, buffer);
-  res.render('index',  {
+  res.render("index", {
     user: {
       index: parseInt(data),
       username: username
@@ -54,6 +63,15 @@ app.post("/upload", (req, res) => {
 });
 
 app.get("/favicon.ico", (req, res) => res.status(204));
+
+app.post("/check", (req, res) => {
+  var spawn = require("child_process").spawn;
+  var process = spawn("python", ["./python/face_data_collect.py"]);
+
+  process.stdout.on("data", function(data) {
+    res.send(data.toString());
+  });
+});
 
 app.listen(3000, () => {
   console.log("Server is listening to port 3000");
